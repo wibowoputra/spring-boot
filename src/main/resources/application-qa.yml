@@ -1,0 +1,13 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: spring-mvc-demo
+  profiles: qa
+  datasource:
+    url: jdbc:postgresql://localhost:5432/qadb
+    username: qa_user
+    password: qa_pass
+logging:
+  level:
+    root: DEBUG

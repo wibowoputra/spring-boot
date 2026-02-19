@@ -1,0 +1,13 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: spring-mvc-demo
+  profiles: dev
+  datasource:
+    url: jdbc:postgresql://localhost:5432/devdb
+    username: dev_user
+    password: dev_pass
+logging:
+  level:
+    root: DEBUG
