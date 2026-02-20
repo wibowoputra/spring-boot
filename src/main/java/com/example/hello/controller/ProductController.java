@@ -11,8 +11,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.hello.Entity.ProductRequest;
+import com.example.hello.exception.ProductNotFoundException;
 import com.example.hello.model.Product;
 import com.example.hello.service.ProductService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/products")
@@ -25,12 +29,19 @@ public class ProductController {
 
     //create product
     @PostMapping()
-    public Product createProduct(@RequestBody Product product) {
-        return productService.createProduct(product);
+    public Product createProduct(@Valid @RequestBody ProductRequest product) {
+        Product newProduct = new Product();
+        newProduct.setName(product.getName());  
+        newProduct.setPrice(product.getPrice());
+        newProduct.setId(product.getId());
+        return productService.createProduct(newProduct);
     }
     //read product
     @GetMapping("/{id}")
     public Product getProductById(@PathVariable Long id) {
+        if(id == 99L) {
+            throw new ProductNotFoundException(id);
+        }
         return productService.getProductById(id);
     }
 
