@@ -3,3 +3,27 @@ server:
 spring:
   application:
     name: spring-mvc-demo
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      retries: 3                 # ⬅️ MAX 3 KALI
+      retry-backoff-ms: 1000     # jeda 1 detik
+      delivery-timeout-ms: 15000 # stop total setelah 15 detik
+      request-timeout-ms: 5000
+      acks: all
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    consumer:
+      group-id: product-order-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: "*"
+logging:
+  level:
+    root: INFO
+    org.apache.kafka: WARN
+    org.springframework.kafka: INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"

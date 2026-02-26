@@ -7,19 +7,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.hello.service.CalculatorService;
 
+import lombok.RequiredArgsConstructor;
+
 @RestController
 @RequestMapping("/api/calculator")
+@RequiredArgsConstructor
 public class CalculatorController {
     
-    CalculatorService calculatorService;    
+    private final CalculatorService calculatorService;    
 
-    public CalculatorController(CalculatorService calculatorService) {
-        this.calculatorService = calculatorService;
-    }
-
-        @GetMapping("/add") 
-    public int add(@RequestParam int a, @RequestParam  int b) {
-        return calculatorService.add(a, b);     
+    @GetMapping("/add") 
+    public String add(@RequestParam int a, @RequestParam  int b) {
+        return String.valueOf(a + b);     
     }
 
 }
